@@ -24,4 +24,49 @@ git config user.name "Your Another Name"
 git config user.email "Your Another Name"
 ```
 
-## その他は後ほど記述予定。
+---
+
+### 少し雑ですが忘れない為にメモしておきます。
+
+## 複数アカウント切替え
+
+```
+nano ~/.bashrc
+
+function gitMain() {
+  git config --global user.name "MainUserName"
+  git config --global user.email "MainUserEmail"
+  git config --list
+}
+
+function gitSub() {
+  git config --global user.name "SubUserName"
+  git config --global user.email "SubUserEmail"
+  git config --list
+}
+
+source ~/.bashrc
+```
+
+- Main
+`$gitMain`
+
+- Sub
+`$gitSub`
+
+# set
+```
+ディレクトリ移動後
+git remote set-url origin gitMain:MainUserName/repo.git
+git remote -v
+```
+
+# ssh疎通確認
+```
+ssh -T gitMain
+or
+ssh -T gitSub
+```
+
+- 疎通OKメッセージ
+`Hi UserName! You've successfully authenticated, but GitHub does not provide shell access.`
